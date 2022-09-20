@@ -1,33 +1,6 @@
-const Header = (props) => {
-  return <h1>{props.course}</h1>;
-};
-
-const Exercice = (props) => {
-  return (
-    <p>
-      {props.part} {props.exo}
-    </p>
-  );
-};
-
-const Content = (props) => {
-  return (
-    <>
-      <Exercice part={props.part1} exo={props.exo1} />
-      <Exercice part={props.part2} exo={props.exo2} />
-      <Exercice part={props.part3} exo={props.exo3} />
-    </>
-  );
-};
-
-const Footer = (props) => {
-  return (
-    <p>
-      Number of exercises{" "}
-      {props.exercises1 + props.exercises2 + props.exercises3}
-    </p>
-  );
-};
+import Header from "./components/Header";
+import Content from "./components/Content";
+import Footer from "./components/Footer";
 
 const App = () => {
   const course = "Half Stack application development";
