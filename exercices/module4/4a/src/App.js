@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import personsServices from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -9,12 +10,11 @@ const App = () => {
   const [newNumber, setNumber] = useState("");
 
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
+    personsServices.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
+
   console.log("render", persons.length, "persons");
 
   const addSomeOne = (event) => {
@@ -23,18 +23,23 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
+
     let exist = false;
+
     persons.map((person) => {
       if (person.name === newPersonne.name) {
         exist = true;
       }
     });
+
     if (exist) {
       alert(newName + " is already added to Phonebook");
     } else {
-      setPersons(persons.concat(newPersonne));
-      setNewName("");
-      setNumber("");
+      personsServices.create(newPersonne).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNumber("");
+      });
     }
   };
 
